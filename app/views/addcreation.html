@@ -1,0 +1,36 @@
+<md-content layout-padding>
+    <form name="projectForm">
+
+        <md-input-container class="md-block">
+            <label>Titre</label>
+            <input required name="title" ng-model="creation.title">
+            <div ng-messages="projectForm.title.$error">
+                <div ng-message="required">Ce champ est obligatoire</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Image de Présentation</label>
+            <input required name="image" type="file" file-model="creation.image">
+            <div ng-messages="projectForm.file.$error">
+                <div ng-message="required">Ce champ est obligatoire</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Lien</label>
+            <input name="link" ng-model="creation.link">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Description</label>
+            <textarea required name="description" ng-model="creation.description"></textarea>
+            <div ng-messages="projectForm.comments.$error">
+                <div ng-message="required">Ce champ est obligatoire</div>
+            </div>
+        </md-input-container>
+        <md-select placeholder="Choississez une catégorie" ng-model="creation.category" md-on-open="loadCategories()" style="min-width: 200px;">
+            <md-option ng-value="category.id" ng-repeat="category in categories">{{category.title}}</md-option>
+        </md-select>
+        <p class="md-caption">Vous avez choisi comme catégorie : {{ creation.category ? creation.category.title : 'Aucune' }}</p>
+
+        <md-button ng-click="addCreation()">Ajouter</md-button>
+    </form>
+</md-content>
