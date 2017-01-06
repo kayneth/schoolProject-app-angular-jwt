@@ -1,4 +1,4 @@
-<div class="loginBox md-whiteframe-z1" layout="column">
+<div class="loginBox md-whiteframe-z2" layout="column">
     <form>
         <md-toolbar>
             <h2 class="md-toolbar-tools"><span>Login</span></h2>
@@ -21,6 +21,44 @@
                 </md-button>
                 <div flex="flex"></div>
                 <md-button href="" md-no-ink="md-no-ink">Mot de passe oublié ?</md-button>
+            </div>
+        </md-content>
+    </form>
+</div>
+
+<div class="registerBox md-whiteframe-z1" layout="column">
+    <form>
+        <md-toolbar>
+            <h2 class="md-toolbar-tools"><span>Inscription</span></h2>
+        </md-toolbar>
+        <md-content class="md-padding" layout="column">
+            <md-input-container>
+                <label>Pseudo</label>
+                <input type="text" ng-model="registeringUser.username"/>
+            </md-input-container>
+            <md-input-container>
+                <label>E-mail</label>
+                <input type="text" ng-model="registeringUser.email"/>
+            </md-input-container>
+            <md-input-container>
+                <label>Mot de passe</label>
+                <input type="password" ng-model="registeringUser.plainPassword.first"/>
+            </md-input-container>
+            <md-input-container>
+                <label>Confirmation de mot de passe</label>
+                <input type="password" ng-model="registeringUser.plainPassword.second"/>
+            </md-input-container>
+            <md-input-container>
+                <label>Votre code d'invitation</label>
+                <input type="password" ng-model="registeringUser.invitation"/>
+            </md-input-container>
+            <div layout="row" layout-align="center center" style="padding-top:20px">
+                <md-button class="md-raised md-primary" type="submit" ng-click="register()">
+                    <span>S'inscrire</span>
+                    <md-icon ng-show="loader">
+                        <md-progress-circular class="md-hue-2 md-accent" md-diameter="20px"></md-progress-circular>
+                    </md-icon>
+                </md-button>
             </div>
         </md-content>
     </form>

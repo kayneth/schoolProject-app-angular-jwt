@@ -1,0 +1,18 @@
+<div>
+    <form name="invitationForm">
+    <md-input-container>
+        <input aria-label="inviter" ng-model="invitation.email"/>
+    </md-input-container>
+    <md-button ng-click="sendInvitation()">Créer une invitation</md-button>
+    </form>
+</div>
+
+<md-list flex>
+    <md-subheader class="md-no-sticky"> Invitations </md-subheader>
+    <md-list-item class="md-3-line" ng-repeat="invitation in invitations">
+        <div class="md-list-item-text" layout="column">
+            <h4>{{ invitation.email }}</h4>
+            <p>{{ invitation.code }}</p>
+        </div>
+    </md-list-item>
+</md-list>

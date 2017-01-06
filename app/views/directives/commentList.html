@@ -1,0 +1,21 @@
+<md-whiteframe class="md-whiteframe-2dp" flex-sm="90" flex-gt-sm="70" flex-gt-md="50" layout layout-align="center center">
+    <md-list flex>
+        <md-subheader class="md-no-sticky"> Commentaires </md-subheader>
+        <md-list-item class="md-12-line">
+            <form name="commentForm">
+                <md-input-container>
+                    <textarea aria-label="commenter" ng-model="comment.content"></textarea>
+                </md-input-container>
+                <md-button ng-click="addComment()">Commenter</md-button>
+            </form>
+        </md-list-item>
+        <md-list-item class="md-3-line" ng-repeat="comment in creation.comments">
+            <md-icon md-svg-icon="account" ng-if="!comment.user.avatar" class="md-avatar"></md-icon>
+            <img ng-src="{{comment.user.avatar }}?{{$index}}" ng-if="comment.user.avatar" class="md-avatar" alt="{{comment.user.username}}" />
+            <div class="md-list-item-text" layout="column">
+                <h4>{{ comment.user.username }} <small> - {{ comment.createdAt | date :  "dd/MM/y" }}</small></h4>
+                <p>{{ comment.content }}</p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-whiteframe>

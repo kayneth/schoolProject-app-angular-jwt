@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ShareCrea - App de partage de création multimédia</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -21,7 +21,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ng-app="StarterApp" ng-controller="NavbarCtrl" layout="column" layout-fill="layout-fill">
+    <div ng-controller="NavbarCtrl" layout="column" layout-fill="layout-fill">
       <md-toolbar>
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button" ng-click="toggleSidenav()">
@@ -38,6 +38,10 @@
             <md-list-item ng-if="isAuthenticated" ng-click="showAddCrea($event)" md-ink-ripple="#3F51B5">
               <md-icon md-svg-icon="plus-circle"></md-icon>
               <p>Ajout</p>
+            </md-list-item>
+            <md-list-item ng-if="isAdmin" ng-href="#!/admin" ng-click="toggleSidenav()" md-ink-ripple="#3F51B5">
+              <md-icon md-svg-icon="security-home"></md-icon>
+              <p>Admin</p>
             </md-list-item>
             <md-list-item class="pointer" md-ink-ripple="#3F51B5" ng-if="!isAuthenticated" ng-href="#!/login">
               <md-icon md-svg-icon="login"></md-icon>
@@ -86,6 +90,7 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -99,6 +104,12 @@
         <script src="scripts/filters/truncate.js"></script>
         <script src="scripts/directives/regularcard.js"></script>
         <script src="scripts/directives/usercard.js"></script>
+        <script src="scripts/directives/commentlist.js"></script>
+        <script src="scripts/services/scauthmanager.js"></script>
+        <script src="scripts/services/scbase64.js"></script>
+        <script src="scripts/directives/ratingstars.js"></script>
+        <script src="scripts/filters/range.js"></script>
+        <script src="scripts/controllers/admin.js"></script>
         <!-- endbuild -->
 </body>
 </html>

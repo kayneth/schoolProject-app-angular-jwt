@@ -1,5 +1,5 @@
 <md-card>
-    <img ng-src="{{ creation.image }}" class="md-card-image" alt="{{ creation.title }}">
+    <img ng-src="{{ apiRoot }}/{{ creation.imageLink }}" class="md-card-image" alt="{{ creation.image.alt }}">
     <md-card-title>
         <md-card-title-text>
             <span class="md-headline">{{ creation.title }}</span>
@@ -10,9 +10,7 @@
         <p ng-if="creation.link == null">Aucun lien vers la source</p>
         <md-button ng-if="creation.link" ng-href="{{creation.link}}" target="_blank">Lien vers le projet</md-button>
         <md-card-icon-actions>
-            <md-button class="md-icon-button" aria-label="toggle">
-                <md-icon md-svg-icon="heart-outline"></md-icon>
-            </md-button>
+            <rating-stars creation="creation" ng-if="ready"></rating-stars>
         </md-card-icon-actions>
     </md-card-actions>
     <md-card-content layout-padding>
@@ -25,24 +23,6 @@
 <user-card name="{{ creation.user.username }}"></user-card>
 
 <!-- Commentaires -->
-<md-list flex>
-    <md-subheader class="md-no-sticky"> Commentaires </md-subheader>
-    <md-list-item class="md-3-line">
-        <form name="projectForm">
-            <md-input-container>
-                <textarea required name="description" ng-model="comment.content"></textarea>
-                <div ng-messages="projectForm.comments.$error">
-                    <div ng-message="required">Ce champ est obligatoire</div>
-                </div>
-            </md-input-container>
-            <md-button ng-click="addComment()">Commenter</md-button>
-        </form>
-    </md-list-item>
-    <md-list-item class="md-3-line" ng-repeat="comment in creation.comments">
-        <img ng-src="{{comment.user.avatar }}?{{$index}}" class="md-avatar" alt="{{comment.user.username}}" />
-        <div class="md-list-item-text" layout="column">
-            <h4>{{ comment.user.username }}</h4>
-            <p>{{ comment.content }}</p>
-        </div>
-    </md-list-item>
-</md-list>
+<div ng-if="ready">
+    <comment-list creation="creation"></comment-list>
+</div>

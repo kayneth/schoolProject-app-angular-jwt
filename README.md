@@ -29,4 +29,5 @@ Running `grunt test` will run the unit tests with karma.
 ### Autre
 
 * https://materialdesignicons.com/
+* https://github.com/danialfarid/ng-file-upload
 

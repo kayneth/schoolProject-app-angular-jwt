@@ -19,7 +19,8 @@ var app = angular
     'ngSanitize',
     'ngTouch',
     'ngMaterial',
-    'angular-jwt'
+    'angular-jwt',
+      'base64'
   ])
   .config(function ($httpProvider, $routeProvider, jwtOptionsProvider, jwtInterceptorProvider, $locationProvider, $mdIconProvider) {
 
@@ -45,6 +46,11 @@ var app = angular
               requiresLogin: true
           }
       })
+      .when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl',
+        controllerAs: 'admin'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -52,10 +58,10 @@ var app = angular
       $mdIconProvider.defaultIconSet('../icons/mdi.svg');
 
       jwtOptionsProvider.config({
-          whiteListedDomains: ['127.0.0.1', 'localhost'],
+          whiteListedDomains: ['127.0.0.1', 'localhost', 'http://api.sharecrea.iut-lepuy.fr/'],
           unauthenticatedRedirectPath: '/login',
 
-          tokenGetter: ['options','$http', 'jwtHelper', function(options, $http, jwtHelper) {
+          tokenGetter: ['options','$http', 'jwtHelper', 'scAuthManager', function(options, $http, jwtHelper, scAuthManager) {
               // Skip authentication for any requests ending in .html
               if (options && options.url.substr(options.url.length - 5) === '.html') {
                   return null;
@@ -64,38 +70,14 @@ var app = angular
               var jwt = localStorage.getItem('JWT');
               var refreshToken = localStorage.getItem('refresh_token');
 
-              if(jwt === null || jwt === "undefined")
-              {
-                  return $http({
-                      url: 'http://127.0.0.1:8000/api/token/refresh',
-                      // This will not send the JWT for this call
-                      skipAuthorization: true,
-                      method: 'POST',
-                      refresh_token : refreshToken,
-                      data: {"refresh_token" : refreshToken}
-                  }).then(function(response) {
-                      localStorage.setItem('JWT', response.data.jwt);
-                      return jwt;
-                  });
-              }
-              else if(jwtHelper.isTokenExpired(jwt))
-              {
-                  console.log('test jwt');
-                  // This is a promise of a JWT id_token
-                  return $http({
-                      url: 'http://127.0.0.1:8000/api/token/refresh',
-                      // This will not send the JWT for this call
-                      skipAuthorization: true,
-                      method: 'POST',
-                      refresh_token : refreshToken,
-                      data: {"refresh_token" : refreshToken}
-                  }).then(function(response) {
-                      localStorage.setItem('JWT', response.data.jwt);
-                      return jwt;
-                  });
-              } else {
-                  return jwt;
-              }
+              // if(jwtHelper.isTokenExpired(jwt))
+              // {
+              //     // This is a promise of a JWT id_token
+              //     return scAuthManager.refreshToken(refreshToken);
+              // } else {
+              //     return jwt;
+              // }
+              return jwt;
           }]
 
 
@@ -107,15 +89,37 @@ var app = angular
       //$locationProvider.html5Mode(true);
   });
 
-app.run(['$rootScope', 'authManager', function($rootScope, authManager) {
+app.run(['$rootScope', '$location', 'jwtHelper', 'scAuthManager', function($rootScope, $location, jwtHelper, scAuthManager) {
 
-    $rootScope.api = "http://127.0.0.1:8000/api";
+    //$rootScope.apiRoot = "http://127.0.0.1:8000";
+    $rootScope.apiRoot = "http://api.sharecrea.iut-lepuy.fr/web/app_dev.php";
+    $rootScope.api = $rootScope.apiRoot+"/api";
 
-    authManager.checkAuthOnRefresh();
-    authManager.redirectWhenUnauthenticated();
+    scAuthManager.initialize();
 
     $rootScope.$on('tokenHasExpired', function() {
-        //window.alert('Your session has expired!');
+        scAuthManager.refreshToken();
+    });
+
+    $rootScope.$on('$locationChangeStart', function(event) {
+        //event.preventDefault();
+        var token = localStorage.getItem('JWT');
+        var refreshToken = localStorage.getItem('refresh_token');
+        if (token && token != "undefined") {
+            if (!jwtHelper.isTokenExpired(token)) {
+
+            } else {
+                if (refreshToken) {
+                    scAuthManager.refreshToken(refreshToken);
+                } else {
+                    $location.path('/login');
+                }
+            }
+        } else if (refreshToken) {
+            scAuthManager.refreshToken(refreshToken);
+        } else {
+            $location.path('/login');
+        }
     });
 
 }]);
