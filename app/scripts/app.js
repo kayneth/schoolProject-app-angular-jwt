@@ -58,7 +58,7 @@ var app = angular
       $mdIconProvider.defaultIconSet('../icons/mdi.svg');
 
       jwtOptionsProvider.config({
-          whiteListedDomains: ['127.0.0.1', 'localhost', 'http://api.sharecrea.iut-lepuy.fr/'],
+          whiteListedDomains: ['127.0.0.1', 'localhost', 'http://api.sharecrea.iut-lepuy.fr/', 'http://iut-lepuy.fr/'],
           unauthenticatedRedirectPath: '/login',
 
           tokenGetter: ['options','$http', 'jwtHelper', 'scAuthManager', function(options, $http, jwtHelper, scAuthManager) {
