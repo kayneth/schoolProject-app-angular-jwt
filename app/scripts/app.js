@@ -55,10 +55,10 @@ var app = angular
         redirectTo: '/'
       });
 
-      $mdIconProvider.defaultIconSet('../icons/mdi.svg');
+      $mdIconProvider.defaultIconSet('../images/mdi.svg');
 
       jwtOptionsProvider.config({
-          whiteListedDomains: ['127.0.0.1', 'localhost', 'http://api.sharecrea.iut-lepuy.fr/', 'http://iut-lepuy.fr/'],
+          whiteListedDomains: ['127.0.0.1', 'localhost', 'api.sharecrea.iut-lepuy.fr', 'iut-lepuy.fr', 'sharecrea.iut-lepuy.fr'],
           unauthenticatedRedirectPath: '/login',
 
           tokenGetter: ['options','$http', 'jwtHelper', 'scAuthManager', function(options, $http, jwtHelper, scAuthManager) {
@@ -92,7 +92,7 @@ var app = angular
 app.run(['$rootScope', '$location', 'jwtHelper', 'scAuthManager', function($rootScope, $location, jwtHelper, scAuthManager) {
 
     //$rootScope.apiRoot = "http://127.0.0.1:8000";
-    $rootScope.apiRoot = "http://api.sharecrea.iut-lepuy.fr/web/app_dev.php";
+    $rootScope.apiRoot = "http://api.sharecrea.iut-lepuy.fr";
     $rootScope.api = $rootScope.apiRoot+"/api";
 
     scAuthManager.initialize();

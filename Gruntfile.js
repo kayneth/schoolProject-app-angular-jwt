@@ -351,6 +351,24 @@ module.exports = function (grunt) {
       }
     },
 
+    // svgmin: {
+    //   options: {
+    //     plugins: [{
+    //       collapseGroups: false
+    //     }, {
+    //       removeUnknownsAndDefaults: false
+    //     }]
+    //   },
+    //   dist: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>/images',
+    //       src: '{,*/}*.svg',
+    //       dest: '<%= yeoman.dist %>/images'
+    //     }]
+    //   }
+    // },
+
     htmlmin: {
       dist: {
         options: {

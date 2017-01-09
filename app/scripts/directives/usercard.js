@@ -10,7 +10,7 @@ angular.module('shareCreationsApp')
   .directive('userCard', function () {
       return {
           restrict: 'E',
-          templateUrl: '../views/directives/userCard.html',
+          templateUrl: 'views/directives/userCard.html',
           scope: {
               name: '@',
               theme: '@'

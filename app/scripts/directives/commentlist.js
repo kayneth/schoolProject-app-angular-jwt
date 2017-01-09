@@ -9,7 +9,7 @@
 angular.module('shareCreationsApp')
   .directive('commentList', function () {
     return {
-        templateUrl: '../views/directives/commentList.html',
+        templateUrl: 'views/directives/commentList.html',
         restrict: 'E',
         link: function postLink(scope, element, attrs) {
             //console.log(scope.creation);

@@ -9,7 +9,7 @@
 angular.module('shareCreationsApp')
   .directive('ratingStars', function () {
     return {
-        templateUrl: '../views/directives/ratingStars.html',
+        templateUrl: 'views/directives/ratingStars.html',
         restrict: 'E',
         link: function postLink(scope, element, attrs) {
             //console.log(scope.creation);
@@ -31,6 +31,8 @@ angular.module('shareCreationsApp')
                 console.log($scope.score);
                 $http.post($rootScope.api + '/creations/scores', $scope.score).then(function (res) {
                     console.log(res);
+                    $scope.creation.scoreAverage = res.data.score.creation.scoreAverage;
+                    $scope.error = "Merci pour la note de "+ res.data.score.note +"/5 :)";
                 }, function error (res){
                     $scope.error = res.data.errors.global[0];
                     console.log($scope.error)
